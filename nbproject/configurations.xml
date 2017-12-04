@@ -19,6 +19,8 @@
       <itemPath>debian/control.in</itemPath>
       <itemPath>nbproject/private/launcher.properties</itemPath>
       <itemPath>makefile</itemPath>
+      <itemPath>cygwin/prorab-extra.cygport.in</itemPath>
+      <itemPath>homebrew/prorab-extra.rb.in</itemPath>
       <itemPath>travis_bintray_deb.json.in</itemPath>
       <itemPath>travis_bintray_rasp.json.in</itemPath>
       <itemPath>travis_bintray_ubu.json.in</itemPath>

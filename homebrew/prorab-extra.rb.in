@@ -1,0 +1,15 @@
+class ProrabExtra < Formula
+  desc "GNU make based build system."
+  homepage "https://github.com/igagis/prorab-extra"
+  url "https://github.com/igagis/prorab-extra/archive/$(version).tar.gz"
+  sha256 "$(sha256)"
+
+  def install
+    ENV['PATH'] += ':/usr/local/bin'
+    system "make", "-C", "src", "install", "PREFIX=#{prefix}"
+  end
+  
+  test do
+    system "make", "test"
+  end
+end
