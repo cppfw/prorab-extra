@@ -7,7 +7,7 @@ SUMMARY="A GNU make based build system"
 DESCRIPTION="A GNU make based build system.
 Non-recursive GNU make based build system for C/C++ applications and libraries."
 
-SRC_URI="https://github.com/igagis/prorab/archive/${VERSION}.tar.gz"
+SRC_URI="https://github.com/igagis/prorab-extra/archive/${VERSION}.tar.gz"
 
 src_compile() {
   cd ${B}
