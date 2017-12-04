@@ -16,6 +16,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>.travis.yml</itemPath>
       <itemPath>appveyor.yml</itemPath>
+      <itemPath>debian/control.in</itemPath>
       <itemPath>nbproject/private/launcher.properties</itemPath>
       <itemPath>makefile</itemPath>
       <itemPath>travis_bintray_deb.json.in</itemPath>
