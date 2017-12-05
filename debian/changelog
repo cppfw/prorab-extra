@@ -1,3 +1,9 @@
+prorab-extra (0.1.5) unstable; urgency=medium
+
+  * fixed deployemnt to homebrew
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 05 Dec 2017 09:47:30 +0200
+
 prorab-extra (0.1.4) unstable; urgency=medium
 
   * fixed deployemnt to homebrew
