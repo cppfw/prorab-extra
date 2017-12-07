@@ -1,3 +1,9 @@
+prorab-extra (1) unstable; urgency=medium
+
+  * travis deploy fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 07 Dec 2017 15:50:22 +0200
+
 prorab-extra (0.1.5) unstable; urgency=medium
 
   * fixed deployemnt to homebrew
