@@ -1,3 +1,9 @@
+prorab-extra (0.2.0) unstable; urgency=medium
+
+  * stable version
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 23 Feb 2018 18:26:52 +0200
+
 prorab-extra (0.1.8) unstable; urgency=medium
 
   * update cygwin repo record
