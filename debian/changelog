@@ -1,3 +1,9 @@
+prorab-extra (0.2.1) unstable; urgency=medium
+
+  * deploying to msys2
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 12 Dec 2018 18:13:14 +0200
+
 prorab-extra (0.2.0) unstable; urgency=medium
 
   * stable version
