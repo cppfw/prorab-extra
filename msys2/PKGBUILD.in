@@ -1,0 +1,47 @@
+# Maintainer: Ivan Gagis <igagis@gmail.com>
+pkgname=prorab-extra
+pkgver=$(version)
+pkgrel=1
+epoch=
+pkgdesc="non-recursive GNU make-based build system additions for doxygen and pkg-config"
+arch=('any')
+url="http://github.com/igagis/prorab-extra"
+license=('MIT')
+groups=()
+
+#Need 'diffutils' package for 'cmp' program
+depends=('prorab')
+
+makedepends=('myci')
+checkdepends=('myci')
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("https://github.com/igagis/$pkgname/archive/$pkgver.tar.gz")
+noextract=()
+md5sums=()
+validpgpkeys=()
+
+prepare() {
+	cd "$pkgname-$pkgver"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	make autojobs=true
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+	make test
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	make DESTDIR="$pkgdir" PREFIX=/usr install
+}
