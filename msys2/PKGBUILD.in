@@ -13,7 +13,7 @@ groups=()
 depends=('prorab')
 
 makedepends=('myci')
-checkdepends=('myci')
+checkdepends=('myci' 'doxygen')
 optdepends=()
 provides=()
 conflicts=()
