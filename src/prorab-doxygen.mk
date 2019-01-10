@@ -18,7 +18,7 @@ ifneq ($(prorab_doxygen_included),true)
 		$(prorab_echo)myci-apply-version.sh -v $$(shell myci-deb-version.sh $(prorab_this_dir)../debian/changelog) $$(firstword $$^)
 
         $(prorab_this_dir)doxygen: $(prorab_this_dir)doxygen.cfg
-		@echo "Building docs..."
+		@echo "Building docs"
 		$(prorab_echo)(cd $(prorab_this_dir); doxygen doxygen.cfg || true)
 
         clean::
@@ -36,5 +36,5 @@ ifneq ($(prorab_doxygen_included),true)
         #need empty line here to avoid merging with adjacent macro instantiations
     endef
 
-    
+
 endif

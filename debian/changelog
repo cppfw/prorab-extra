@@ -1,3 +1,9 @@
+prorab-extra (0.2.4) unstable; urgency=medium
+
+  * removed ... from output
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 10 Jan 2019 19:36:34 +0200
+
 prorab-extra (0.2.3) unstable; urgency=medium
 
   * msys deploy to msys repo insead of mingw
