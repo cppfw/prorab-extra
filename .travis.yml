@@ -1,43 +1,66 @@
+# build only master branch and version tags
 branches:
-  except:
-  - release
+  only:
+  - master
+  - /^\d*\.\d*\.\d*$/
 
 sudo: required
-dist: trusty
+
+services:
+- docker
+
+language: cpp
+dist: xenial
+os: linux
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'deb http://dl.bintray.com/igagis/ubuntu xenial main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x379CE192D401AB61'
+    update: true
+    packages:
+    - binfmt-support
+    - qemu-user-static
+    - myci
 
 matrix:
   include:
-    - os: osx
-      env: BUILD_NAME=macosx
+    - name: macosx
+      os: osx
       compiler: clang
-      language: cpp
       osx_image: xcode8.3
-    - os: linux
-      env: BUILD_NAME=debian
-      compiler: gcc
-      language: cpp
-      dist: trusty
-    - os: linux
-      env: BUILD_NAME=ubuntu
-      compiler: gcc
-      language: cpp
-      dist: trusty
-    - os: linux
-      env: BUILD_NAME=raspberry_pi
-      compiler: gcc
-      language: cpp
-      dist: trusty
+
 
 env:
   global:
+  # Encrypted MYCI_BINTRAY_API_KEY for publishing to bintray.
+  - secure: "Jbbo3p+nu1dGDjSARRL/59L14y2EYA9jYs48APXmsEwDVFRhGIo/1DxoZ3F2vGCSRvADnb53Y+3iF+safwFhtcbrQCngNHSjAjRTyTG9+YOecZVDUfRrPI0QoEwEb2Mk8gc1Eqk7OYjrCFbj1+xt7XL2QnJZbpvqlX7nRBkGHGQ7sSSDIoh+fYBk48EfpHi7r69e+7PiWpV0YqQmThs1o5AtWK1c4/85urlZRPuaSj0m5tiyKIRQr/Dzv6h33MbyNY+Xvs9IzUdF8/zxiPBRI5+uDOsABOYAHlrkeWsRoAsToWtwaRGKhjTJj1+SKjlfomyi90P5vTyRSAZmMaAgdvImaSOnJsugo2Bpdmgg0g4DLXNnSMAFu/xipWIAJfxLa7o2FZ7D/dTPrgHKcRWYODnzyO9q19Snp28b3v608qskmTGry2v4UBesc0tWhTkWIOpSFYws6AmqcBb+7L9w8E9f/zr94e0F8+hZl5u7q548agEmfTvyXy7JbeL1FljW307CI0/Mo+V9i3L1ahJxAjpv+VNW87AoFiex5zP8WhSZbqg+oeu39FLLMtzOCnRfP178drFH5PDTtaXOU0Q6UqBFQD+lGRfzXeuLRjSQFhQ6alQdxwX4JxjoVmhojFqcqxPTmmyTpyREyvLxzzPMzQITw4+Uw5FbKjvgfEYchgI="
   #encrypted MYCI_GIT_ACCESS_TOKEN for publishing to github-based repos
   - secure: "pp82V/bu4qK4jq/pl0nSF73ABtMBRPsL2Lj5F3o850jRPQ/xz7O7U4hFLIYNovFPqdERVHkerTYqH2WoC+N7FIKp86M2Nr4EHK5KgllYoTDppaVP7Po4ZqNKJ9Xj5v+sXQiX88XEwgMffAIwZMxQ4vauotsOZy0tIx6pGLoOyhIp/Nc6CNW2iyzSUcr7vK7Vmf2CSYFBdbaX+BZAmaZYiv4w83lIo/GkKECNY4nOcguJ/sLjTI08OYjZ2EZh+yHQuCfQ01TVZbAYM78y1XvK8QGZhbC+/bQnfq4rbrCeOOb/nWq+/OJ59bbsj6mrG7hfdWKFBfIcwC4LRrIeo0he+akCXwI3hCyFB9Udn5izsmDpfUHIkMPQnfSLUQNnMjt46OTik3VOi6nObmbKu6vIHQ67jEX1qNTXsrCpJZqzl8tWFjj+ZTlZiDBz/clmetvSab5kbuTQC4Hh0Thf6xpqh+DkbfYWUYYtYQLaHtbEk9I4VZk6iPc/gOfi0rDsj3lecvfXQflb/Lqh7PG02fuFz1wF/d9HUInz2SVTt8GX8X2lHdJsnkzbZuFneoZCeOJ6pMbnqV/85cj5SVUjjwVDxOLT99VjeZ+blG7J44Y1Jv0x59925SMT7RGySyw6A6C194anuf05TYlfsR6XUlVf7RO9xwnEhDEuvMpokju984w="
   - MYCI_GIT_USERNAME=igagis
   - USE_ANDROID_NDK_VERSION=15c
-  - linuxDependencies="debhelper fakeroot prorab myci"
+  - PACKAGE_NAME=prorab-extra
+  matrix:
+  - OS_REL=xenial OS=ubuntu DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
+  - OS_REL=bionic OS=ubuntu DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
+  - OS_REL=stretch OS=debian DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
+  - OS_REL=stretch OS=raspbian DOCKER_IMAGE=igagis/$OS:$OS_REL PACKAGE_TYPE=deb
 
 before_install:
-- if [ "$BUILD_NAME" == "macosx" ]; then
+- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ -z "$TRAVIS_JOB_NAME" ]; then
+    docker run --name ccc -v $TRAVIS_BUILD_DIR/..:/build -w /build/$(basename $TRAVIS_BUILD_DIR) -it -d $DOCKER_IMAGE bash &&
+    if [ "$PACKAGE_TYPE" == "deb" ]; then
+      docker exec ccc apt update &&
+      docker exec ccc apt install -y dirmngr &&
+      docker exec ccc bash -c "echo 'deb http://dl.bintray.com/igagis/$OS $OS_REL main' > /etc/apt/sources.list.d/igagis.list" &&
+      docker exec ccc apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
+      docker exec ccc apt update &&
+      docker exec ccc apt install -y devscripts equivs myci &&
+      myci-deb-prepare.sh;
+    fi;
+  fi
+- if [ "$TRAVIS_JOB_NAME" == "macosx" ]; then
     rvm install ruby-2.3.3 &&
     rvm use ruby-2.3.3 &&
 
@@ -46,110 +69,32 @@ before_install:
     brew update > /dev/null &&
     brew install prorab myci;
   fi
-- if [ "$BUILD_NAME" == "debian" ]; then
-    echo "deb [arch=amd64] http://dl.bintray.com/igagis/deb unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
-    sudo apt-get update -qq &&
-    sudo apt-get install -qq sbuild $linuxDependencies &&
-    sudo sbuild-adduser $LOGNAME &&
-    echo lQHYBFfZDkYBBACyRm0LCwK/9rSzqSJyEBihVNA61meWp9MVjn3EBPp6MV1/mjZ80LPJ6ecYX6VMu861a5yQLnlA9krUxuHxjnsEYvMQiz0zHapp8Zqu0FIvcU1IWZV7Eio5Lej7QFeHFmtPlrSqT152lVUmQFW9ZCtWOOM1KnKBhoWWLf9z7LnwSwARAQABAAP/SWyYHKQ8TbPeWOCgPzpB6rBz0sfbgkE8vvQg+ErUnt8WEygAqQeMBO1BMNizzBbN3AqmQPvjFM5bo6cGB+cW4tbmWVtp8wMGVm8dobiZP3p1YLtvrweX3gYo1P4km8B7JkeJ0oyGa1k4yP5m4+o7t97EanKLFTFCbJvV/txT+YECAMLhKBMGJBqa8766tsyXbKaHQKvUDwlVCltAbeRb/V7cnIEuf/bn5DcN2O3yhN35OX5EvCeJxtCSBDh9HkQfK0cCAOowGoepffgLuuOfnpNU3GcHU9lNsLUnYJ17Oa38z1JGjggrUvQ5V6UbH0YY14vQXbrOVn+YE9Job9UCnM6DzN0B/19ZoYzH9anOf+nmTM56Rrk8itQXhN/gpI22EZ9n8koELvYrHj3iUgPJ+BOCKTP3E9brojEC048pK58GFJkr+/qjqbRgU2J1aWxkIFNpZ25lciAoU2J1aWxkIEJ1aWxkIERlcGVuZGVuY3kgQXJjaGl2ZSBLZXkpIDxidWlsZGQtdG9vbHMtZGV2ZWxAbGlzdHMuYWxpb3RoLmRlYmlhbi5vcmc+iLgEEwECACIFAlfZDkYCGy8GCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJELG4iKvjYvQgomAEAJzhmqIVxIU3+ROL0B8Q2Iv1gWRe6X17J1UQPYIGkRYcZWYUllWjmk32snT5Yv+x2TMVojD0JCCgltU0JBvydovItd+g6H+C8I/bhoq5twC9CIYGKmhDInxwCdHG8yU7AVdEopf38VsEC+3Hazh4V5sPldHMo9Lx6u5uXiil5qKi | base64 -d | sudo tee /var/lib/sbuild/apt-keys/sbuild-key.sec > /dev/null &&
-    echo mI0EV9kORgEEALJGbQsLAr/2tLOpInIQGKFU0DrWZ5an0xWOfcQE+noxXX+aNnzQs8np5xhfpUy7zrVrnJAueUD2StTG4fGOewRi8xCLPTMdqmnxmq7QUi9xTUhZlXsSKjkt6PtAV4cWa0+WtKpPXnaVVSZAVb1kK1Y44zUqcoGGhZYt/3PsufBLABEBAAG0YFNidWlsZCBTaWduZXIgKFNidWlsZCBCdWlsZCBEZXBlbmRlbmN5IEFyY2hpdmUgS2V5KSA8YnVpbGRkLXRvb2xzLWRldmVsQGxpc3RzLmFsaW90aC5kZWJpYW4ub3JnPoi4BBMBAgAiBQJX2Q5GAhsvBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRCxuIir42L0IKJgBACc4ZqiFcSFN/kTi9AfENiL9YFkXul9eydVED2CBpEWHGVmFJZVo5pN9rJ0+WL/sdkzFaIw9CQgoJbVNCQb8naLyLXfoOh/gvCP24aKubcAvQiGBipoQyJ8cAnRxvMlOwFXRKKX9/FbBAvtx2s4eFebD5XRzKPS8erubl4opeaiog== | base64 -d | sudo tee /var/lib/sbuild/apt-keys/sbuild-key.pub > /dev/null &&
-    sudo sbuild-createchroot --include=gnupg1,dirmngr,build-essential stretch /srv/chroot/deb-amd64 http://httpredir.debian.org/debian &&
-    echo "deb [trusted=yes] http://dl.bintray.com/igagis/deb unstable main" | sudo tee /srv/chroot/deb-amd64/etc/apt/sources.list.d/igagis.list > /dev/null &&
-    sudo chroot /srv/chroot/deb-amd64 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
-    sudo chroot /srv/chroot/deb-amd64 ln -s /usr/bin/gpg1 /usr/bin/gpg;
-  fi
-- if [ "$BUILD_NAME" == "ubuntu" ]; then
-    echo "deb [arch=amd64] http://dl.bintray.com/igagis/ubu unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
-    sudo apt-get update -qq &&
-    sudo apt-get install -qq sbuild $linuxDependencies &&
-    sudo sbuild-adduser $LOGNAME &&
-    echo lQHYBFfZDkYBBACyRm0LCwK/9rSzqSJyEBihVNA61meWp9MVjn3EBPp6MV1/mjZ80LPJ6ecYX6VMu861a5yQLnlA9krUxuHxjnsEYvMQiz0zHapp8Zqu0FIvcU1IWZV7Eio5Lej7QFeHFmtPlrSqT152lVUmQFW9ZCtWOOM1KnKBhoWWLf9z7LnwSwARAQABAAP/SWyYHKQ8TbPeWOCgPzpB6rBz0sfbgkE8vvQg+ErUnt8WEygAqQeMBO1BMNizzBbN3AqmQPvjFM5bo6cGB+cW4tbmWVtp8wMGVm8dobiZP3p1YLtvrweX3gYo1P4km8B7JkeJ0oyGa1k4yP5m4+o7t97EanKLFTFCbJvV/txT+YECAMLhKBMGJBqa8766tsyXbKaHQKvUDwlVCltAbeRb/V7cnIEuf/bn5DcN2O3yhN35OX5EvCeJxtCSBDh9HkQfK0cCAOowGoepffgLuuOfnpNU3GcHU9lNsLUnYJ17Oa38z1JGjggrUvQ5V6UbH0YY14vQXbrOVn+YE9Job9UCnM6DzN0B/19ZoYzH9anOf+nmTM56Rrk8itQXhN/gpI22EZ9n8koELvYrHj3iUgPJ+BOCKTP3E9brojEC048pK58GFJkr+/qjqbRgU2J1aWxkIFNpZ25lciAoU2J1aWxkIEJ1aWxkIERlcGVuZGVuY3kgQXJjaGl2ZSBLZXkpIDxidWlsZGQtdG9vbHMtZGV2ZWxAbGlzdHMuYWxpb3RoLmRlYmlhbi5vcmc+iLgEEwECACIFAlfZDkYCGy8GCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJELG4iKvjYvQgomAEAJzhmqIVxIU3+ROL0B8Q2Iv1gWRe6X17J1UQPYIGkRYcZWYUllWjmk32snT5Yv+x2TMVojD0JCCgltU0JBvydovItd+g6H+C8I/bhoq5twC9CIYGKmhDInxwCdHG8yU7AVdEopf38VsEC+3Hazh4V5sPldHMo9Lx6u5uXiil5qKi | base64 -d | sudo tee /var/lib/sbuild/apt-keys/sbuild-key.sec > /dev/null &&
-    echo mI0EV9kORgEEALJGbQsLAr/2tLOpInIQGKFU0DrWZ5an0xWOfcQE+noxXX+aNnzQs8np5xhfpUy7zrVrnJAueUD2StTG4fGOewRi8xCLPTMdqmnxmq7QUi9xTUhZlXsSKjkt6PtAV4cWa0+WtKpPXnaVVSZAVb1kK1Y44zUqcoGGhZYt/3PsufBLABEBAAG0YFNidWlsZCBTaWduZXIgKFNidWlsZCBCdWlsZCBEZXBlbmRlbmN5IEFyY2hpdmUgS2V5KSA8YnVpbGRkLXRvb2xzLWRldmVsQGxpc3RzLmFsaW90aC5kZWJpYW4ub3JnPoi4BBMBAgAiBQJX2Q5GAhsvBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRCxuIir42L0IKJgBACc4ZqiFcSFN/kTi9AfENiL9YFkXul9eydVED2CBpEWHGVmFJZVo5pN9rJ0+WL/sdkzFaIw9CQgoJbVNCQb8naLyLXfoOh/gvCP24aKubcAvQiGBipoQyJ8cAnRxvMlOwFXRKKX9/FbBAvtx2s4eFebD5XRzKPS8erubl4opeaiog== | base64 -d | sudo tee /var/lib/sbuild/apt-keys/sbuild-key.pub > /dev/null &&
-    sudo sbuild-createchroot --include=gnupg,dirmngr,build-essential --components=main,universe xenial /srv/chroot/ubu-amd64 http://archive.ubuntu.com/ubuntu/ &&
-    echo "deb [trusted=yes] http://dl.bintray.com/igagis/ubu unstable main" | sudo tee /srv/chroot/ubu-amd64/etc/apt/sources.list.d/igagis.list > /dev/null &&
-    sudo chroot /srv/chroot/ubu-amd64 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61;
-  fi
-- if [ "$BUILD_NAME" == "raspberry_pi" ]; then
-    echo "deb [arch=amd64] http://dl.bintray.com/igagis/deb unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
-    sudo apt-get update -qq &&
-    sudo apt-get install -qq sbuild myci;
-    sudo myci-make-raspberry-chroot.sh /srv/chroot/rasp-armhf &&
-    echo "deb http://dl.bintray.com/igagis/rasp unstable main" | sudo tee /srv/chroot/rasp-armhf/etc/apt/sources.list.d/igagis.list > /dev/null &&
-    sudo chroot /srv/chroot/rasp-armhf apt-get update &&
-    sudo chroot /srv/chroot/rasp-armhf apt-get install --allow-unauthenticated -qq -y $linuxDependencies g++ &&
-    sudo mkdir -p /srv/chroot/rasp-armhf/build &&
-    sudo rsync -av $TRAVIS_BUILD_DIR/ /srv/chroot/rasp-armhf/build/;
+
+
+install:
+- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ -z "$TRAVIS_JOB_NAME" ]; then
+    docker exec ccc myci-deb-install-build-deps.sh;
   fi
 
 script:
-- if [ "$BUILD_NAME" == "debian" ]; then
-    myci-deb-prepare.sh &&
-    sg sbuild -c "sbuild -n -A -d stretch-amd64-sbuild --run-lintian --debbuildopts '-us -uc'";
+- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ -z "$TRAVIS_JOB_NAME" ]; then
+    docker exec ccc dpkg-buildpackage -us -uc;
   fi
-- if [ "$BUILD_NAME" == "ubuntu" ]; then
-    myci-deb-prepare.sh &&
-    sg sbuild -c "sbuild -n -A -d xenial-amd64-sbuild --debbuildopts '-us -uc'";
-  fi
-- if [ "$BUILD_NAME" == "macosx" ]; then
+- if [ "$TRAVIS_JOB_NAME" == "macosx" ]; then
     make test &&
     make install;
   fi
-- if [ "$BUILD_NAME" == "raspberry_pi" ]; then
-    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && myci-deb-prepare.sh" &&
-    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && dpkg-buildpackage -us -uc";
-  fi
-
-#- if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-#    src/myci-deb-prepare.sh &&
-#    PATH=$PATH:$TRAVIS_BUILD_DIR/src dpkg-buildpackage -uc -us;
-#  fi
-## 'sudo make install' is needed because when deploying it will use myci-deploy-homebrew.sh script.
-#- if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-#    make &&
-#    PATH=$PATH:$TRAVIS_BUILD_DIR/src make test &&
-#    sudo make install;
-#  fi
-
-before_deploy:
-  - myci-apply-version.sh -v `myci-deb-version.sh debian/changelog` travis_bintray_*.json.in
 
 deploy:
-- provider: bintray
+- provider: script
   skip_cleanup: true
   on:
     tags: true
-    condition: $BUILD_NAME = debian
-  file: travis_bintray_deb.json
-  user: igagis
-  key:
-    secure: "iw30BTqN/0ZShhmhmhijvRl8L7Gtp6lzUJKGyujnoep5O0j9jKB0P0AcI9fIbAKnNDtcFdhqzxYRDumtzCo2Kfh9u+O9xlQXoMDa8u2lVejetPpObUN6Rb8jwmbGebrOGitjdkQuEUvU4GnrHyGq+IXwXHoTb6cvqtoUkLzbbwTgkj9CmC5zhCv4qylwGVF1w+Fu1poWSNsRQpf3pXfowEpkOdhBcjqaxGPClQbbQunKenJgfX6pD8drXKhZbDnHYqqBRtXdL8SxPk0s6CugyiL/pVMB9y1fs4pE89q6sPfJtl/ZCgEacme91fIUar5GWUsfVcLKnqe03PrL7xzRVe1FHQohek+sSMzMXZT9MUQiCHG7+bIKlK4nJLAJQVxobnbW7Q3pPpKhnMWhiFS+k9s58bn0NftqXGvWsUeK0nTh0VhmxVZFkDvUwaKHGATCXBptPKhyt3S/KXWsna//1SbCnjW9aViUIGtb9MxGPUu8RxzpTQszTjDFf4PxyQoXc1Gf0I3GCNfDCCrxvuE1jpDLZfB3+XIRSsUg5iCL/PGN9u6yYWS7l0iRtqltQxin+qmAiNtxVIg7kGe5tO+XvEQtINJCVLk6D6nEG933O5PnzNvwyPOEqSWJ0vUEbYoPJG2Yc8lQLSYSJfEZA+pxGEDmZrDLHYI6ECeTJoL6CIk="
-  dry-run: false
-- provider: bintray
-  skip_cleanup: true
-  on:
-    tags: true
-    condition: $BUILD_NAME = ubuntu
-  file: travis_bintray_ubu.json
-  user: igagis
-  key:
-    secure: "iw30BTqN/0ZShhmhmhijvRl8L7Gtp6lzUJKGyujnoep5O0j9jKB0P0AcI9fIbAKnNDtcFdhqzxYRDumtzCo2Kfh9u+O9xlQXoMDa8u2lVejetPpObUN6Rb8jwmbGebrOGitjdkQuEUvU4GnrHyGq+IXwXHoTb6cvqtoUkLzbbwTgkj9CmC5zhCv4qylwGVF1w+Fu1poWSNsRQpf3pXfowEpkOdhBcjqaxGPClQbbQunKenJgfX6pD8drXKhZbDnHYqqBRtXdL8SxPk0s6CugyiL/pVMB9y1fs4pE89q6sPfJtl/ZCgEacme91fIUar5GWUsfVcLKnqe03PrL7xzRVe1FHQohek+sSMzMXZT9MUQiCHG7+bIKlK4nJLAJQVxobnbW7Q3pPpKhnMWhiFS+k9s58bn0NftqXGvWsUeK0nTh0VhmxVZFkDvUwaKHGATCXBptPKhyt3S/KXWsna//1SbCnjW9aViUIGtb9MxGPUu8RxzpTQszTjDFf4PxyQoXc1Gf0I3GCNfDCCrxvuE1jpDLZfB3+XIRSsUg5iCL/PGN9u6yYWS7l0iRtqltQxin+qmAiNtxVIg7kGe5tO+XvEQtINJCVLk6D6nEG933O5PnzNvwyPOEqSWJ0vUEbYoPJG2Yc8lQLSYSJfEZA+pxGEDmZrDLHYI6ECeTJoL6CIk="
-  dry-run: false
-- provider: bintray
-  skip_cleanup: true
-  on:
-    tags: true
-    condition: $BUILD_NAME = raspberry_pi
-  file: travis_bintray_rasp.json
-  user: igagis
-  key:
-    secure: "iw30BTqN/0ZShhmhmhijvRl8L7Gtp6lzUJKGyujnoep5O0j9jKB0P0AcI9fIbAKnNDtcFdhqzxYRDumtzCo2Kfh9u+O9xlQXoMDa8u2lVejetPpObUN6Rb8jwmbGebrOGitjdkQuEUvU4GnrHyGq+IXwXHoTb6cvqtoUkLzbbwTgkj9CmC5zhCv4qylwGVF1w+Fu1poWSNsRQpf3pXfowEpkOdhBcjqaxGPClQbbQunKenJgfX6pD8drXKhZbDnHYqqBRtXdL8SxPk0s6CugyiL/pVMB9y1fs4pE89q6sPfJtl/ZCgEacme91fIUar5GWUsfVcLKnqe03PrL7xzRVe1FHQohek+sSMzMXZT9MUQiCHG7+bIKlK4nJLAJQVxobnbW7Q3pPpKhnMWhiFS+k9s58bn0NftqXGvWsUeK0nTh0VhmxVZFkDvUwaKHGATCXBptPKhyt3S/KXWsna//1SbCnjW9aViUIGtb9MxGPUu8RxzpTQszTjDFf4PxyQoXc1Gf0I3GCNfDCCrxvuE1jpDLZfB3+XIRSsUg5iCL/PGN9u6yYWS7l0iRtqltQxin+qmAiNtxVIg7kGe5tO+XvEQtINJCVLk6D6nEG933O5PnzNvwyPOEqSWJ0vUEbYoPJG2Yc8lQLSYSJfEZA+pxGEDmZrDLHYI6ECeTJoL6CIk="
-  dry-run: false
+    condition: $PACKAGE_TYPE = deb && -z "$TRAVIS_JOB_NAME"
+  script: myci-deploy-debian-bintray.sh -u igagis -r $OS -p $PACKAGE_NAME -c main -d $OS_REL $TRAVIS_BUILD_DIR/../*.deb
 - provider: script
   skip_cleanup: true
   script: myci-deploy-homebrew.sh -t igagis/tap
   on:
     tags: true
-    condition: $BUILD_NAME = macosx
+    condition: $TRAVIS_JOB_NAME = macosx
