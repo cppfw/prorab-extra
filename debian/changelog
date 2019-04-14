@@ -1,3 +1,9 @@
+prorab-extra (0.2.5) unstable; urgency=medium
+
+  * deploy to bionic
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 15 Apr 2019 00:02:39 +0300
+
 prorab-extra (0.2.4) unstable; urgency=medium
 
   * removed ... from output
