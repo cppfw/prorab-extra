@@ -1,3 +1,9 @@
+prorab-extra (0.2.6) unstable; urgency=medium
+
+  * deploy to debian buster
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 26 Nov 2019 18:04:18 +0200
+
 prorab-extra (0.2.5) unstable; urgency=medium
 
   * deploy to bionic
