@@ -1,3 +1,9 @@
+prorab-extra (0.2.7) unstable; urgency=medium
+
+  * deploy to msys2 from travis
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 27 Nov 2019 18:14:07 +0200
+
 prorab-extra (0.2.6) unstable; urgency=medium
 
   * deploy to debian buster
