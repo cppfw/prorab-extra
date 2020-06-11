@@ -1,3 +1,9 @@
+prorab-extra (0.2.9) unstable; urgency=medium
+
+  * deploy to ubuntu eoan
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 11 Jun 2020 19:17:37 +0300
+
 prorab-extra (0.2.8) unstable; urgency=medium
 
   * refactoring
