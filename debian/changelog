@@ -1,3 +1,9 @@
+prorab-extra (0.2.11) unstable; urgency=medium
+
+  * build for raspbian buster
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 03 Jul 2020 16:14:17 +0300
+
 prorab-extra (0.2.10) unstable; urgency=medium
 
   * msys2 deployment fix
