@@ -12,23 +12,23 @@ ifneq ($(prorab_doxygen_included),true)
 
         all: doc
 
-        doc:: $(prorab_this_dir)doxygen
+        doc:: $(d)doxygen
 
-        $(prorab_this_dir)doxygen.cfg: $(prorab_this_dir)doxygen.cfg.in $(prorab_this_dir)../debian/changelog
-$(.RECIPEPREFIX)$(a)myci-apply-version.sh -v $$(shell myci-deb-version.sh $(prorab_this_dir)../debian/changelog) $$(firstword $$^)
+        $(d)doxygen.cfg: $(d)doxygen.cfg.in $(d)../debian/changelog
+$(.RECIPEPREFIX)$(a)myci-apply-version.sh -v $$(shell myci-deb-version.sh $(d)../debian/changelog) $$(firstword $$^)
 
-        $(prorab_this_dir)doxygen: $(prorab_this_dir)doxygen.cfg
+        $(d)doxygen: $(d)doxygen.cfg
 $(.RECIPEPREFIX)@echo "Building docs"
-$(.RECIPEPREFIX)$(a)(cd $(prorab_this_dir); doxygen doxygen.cfg || true)
+$(.RECIPEPREFIX)$(a)(cd $(d); doxygen doxygen.cfg || true)
 
         clean::
-$(.RECIPEPREFIX)$(a)rm -rf $(prorab_this_dir)doxygen
-$(.RECIPEPREFIX)$(a)rm -rf $(prorab_this_dir)doxygen.cfg
-$(.RECIPEPREFIX)$(a)rm -rf $(prorab_this_dir)doxygen_sqlite3.db
+$(.RECIPEPREFIX)$(a)rm -rf $(d)doxygen
+$(.RECIPEPREFIX)$(a)rm -rf $(d)doxygen.cfg
+$(.RECIPEPREFIX)$(a)rm -rf $(d)doxygen_sqlite3.db
 
-        install:: $(prorab_this_dir)doxygen
+        install:: $(d)doxygen
 $(.RECIPEPREFIX)$(a)install -d $(DESTDIR)$(PREFIX)/share/doc/lib$(this_name)-doc
-$(.RECIPEPREFIX)$(a)install -m 644 $(prorab_this_dir)doxygen/* $(DESTDIR)$(PREFIX)/share/doc/lib$(this_name)-doc || true #ignore error, not all systems have doxygen
+$(.RECIPEPREFIX)$(a)install -m 644 $(d)doxygen/* $(DESTDIR)$(PREFIX)/share/doc/lib$(this_name)-doc || true #ignore error, not all systems have doxygen
 
         uninstall::
 $(.RECIPEPREFIX)$(a)rm -rf $(DESTDIR)$(PREFIX)/share/doc/lib$(this_name)-doc
