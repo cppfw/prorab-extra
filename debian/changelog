@@ -1,3 +1,9 @@
+prorab-extra (0.2.12) unstable; urgency=medium
+
+  * github actions
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 30 Nov 2020 01:28:13 +0200
+
 prorab-extra (0.2.11) unstable; urgency=medium
 
   * build for raspbian buster
