@@ -1,3 +1,9 @@
+prorab-extra (0.2.13) unstable; urgency=medium
+
+  * build for ubuntu focal
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 11 Dec 2020 15:25:19 +0200
+
 prorab-extra (0.2.12) unstable; urgency=medium
 
   * github actions
