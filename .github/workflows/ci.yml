@@ -17,7 +17,7 @@ jobs:
           - {os: debian, codename: stretch, image_owner: , package_type: deb}
           - {os: debian, codename: buster, image_owner: , package_type: deb}
           - {os: ubuntu, codename: bionic, image_owner: , package_type: deb}
-          - {os: ubuntu, codename: eoan, image_owner: , package_type: deb}
+          - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
           # - {os: raspbian, codename: stretch, image_owner: igagis/, package_type: deb}
           # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
@@ -33,6 +33,9 @@ jobs:
           keys: 379CE192D401AB61
       - name: install ci tools
         run: |
+          # configure timezone to avoid 'tzdata' package to require user interaction during installation
+          TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+          
           apt update
           apt install --assume-yes devscripts equivs myci
       - name: prepare debian package
