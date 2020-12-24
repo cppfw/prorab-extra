@@ -1,3 +1,9 @@
+prorab-extra (0.2.14) unstable; urgency=medium
+
+  * github actions build for raspbain
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 24 Dec 2020 19:10:58 +0200
+
 prorab-extra (0.2.13) unstable; urgency=medium
 
   * build for ubuntu focal
