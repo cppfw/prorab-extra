@@ -1,3 +1,9 @@
+prorab-extra (0.2.15) unstable; urgency=medium
+
+  * deploy to jfrog
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 08 Apr 2021 01:01:37 +0300
+
 prorab-extra (0.2.14) unstable; urgency=medium
 
   * github actions build for raspbain
