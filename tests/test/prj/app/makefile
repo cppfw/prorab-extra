@@ -7,6 +7,8 @@ this_out_dir := out/rel
 
 this_srcs := $(call prorab-src-dir, .)
 
+this_cxxflags += -fPIC
+
 this_ldlibs += -ldostuff
 this_ldflags += -L $(d)../lib
 

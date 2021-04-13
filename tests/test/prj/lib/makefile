@@ -6,6 +6,8 @@ this_soname := 0
 
 this_srcs := $(call prorab-src-dir, .)
 
+this_cxxflags += -fPIC
+
 this_ldlibs += -lstdc++
 
 $(eval $(prorab-build-lib))
