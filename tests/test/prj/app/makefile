@@ -18,7 +18,7 @@ $(prorab_this_name): $(abspath $(d)../lib/libdostuff$(dot_so))
 
 this_test_cmd := $(prorab_this_name)
 this_test_deps := $(prorab_this_name)
-this_test_ld_path := $(d)../lib
+this_test_ld_path := ../lib
 
 $(eval $(prorab-test))
 
