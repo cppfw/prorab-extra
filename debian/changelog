@@ -1,3 +1,9 @@
+prorab-extra (0.2.16) unstable; urgency=medium
+
+  * add prorab-test
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 13 Apr 2021 23:06:42 +0300
+
 prorab-extra (0.2.15) unstable; urgency=medium
 
   * deploy to jfrog
