@@ -6,11 +6,11 @@ ifneq ($(prorab_test_included),true)
 
     prorab-private-lib-path-run = \
             $(if $(filter $(os),windows), \
-                    cp $(d)$1/*.dll $(d)$(this_out_dir) && (cd $(d) && $2), \
+                    cp $(patsubst %,$(d)%/*.dll,$(strip $1)) $(d)$(this_out_dir) && (cd $(d) && $2), \
                     $(if $(filter $(os),macosx), \
-                            (export DYLD_LIBRARY_PATH=$1; cd $(d) && $2), \
+                            (export DYLD_LIBRARY_PATH=$(subst $(prorab_space),:,$(strip $1)); cd $(d) && $2), \
                             $(if $(filter $(os),linux), \
-                                    (export LD_LIBRARY_PATH=$1; cd $(d) && $2), \
+                                    (export LD_LIBRARY_PATH=$(subst $(prorab_space),:,$(strip $1)); cd $(d) && $2), \
                                     $(error "unknown OS") \
                                 ) \
                         ) \
