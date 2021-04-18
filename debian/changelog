@@ -1,3 +1,9 @@
+prorab-extra (0.2.18) unstable; urgency=medium
+
+  * this_test_ld_path now requires space separated list of firectories
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 19 Apr 2021 01:16:22 +0300
+
 prorab-extra (0.2.17) unstable; urgency=medium
 
   * fix prorab-test for msys2
