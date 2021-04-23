@@ -1,3 +1,9 @@
+prorab-extra (0.2.19) unstable; urgency=medium
+
+  * add prorab-run
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 23 Apr 2021 14:59:49 +0300
+
 prorab-extra (0.2.18) unstable; urgency=medium
 
   * this_test_ld_path now requires space separated list of firectories
