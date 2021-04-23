@@ -22,4 +22,7 @@ this_test_ld_path := ../lib
 
 $(eval $(prorab-test))
 
+this_run_name := $(this_name)
+$(eval $(prorab-run))
+
 $(eval $(call prorab-include, ../lib/makefile))

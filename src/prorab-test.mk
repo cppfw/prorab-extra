@@ -29,4 +29,17 @@ $(.RECIPEPREFIX)@myci-passed.sh
 
     endef
 
+    # NOTE: the prorab-run uses same input variable names as prorab-test
+    define prorab-run
+
+    $(if $(this_run_name),,$(error prorab-run: this_run_name is not defined))
+    $(if $(this_test_cmd),,$(error prorab-run: this_test_cmd is not defined))
+    $(if $(this_test_deps),,$(error prorab-run: this_test_deps is not defined, set to $$(prorab_space) if no dependencies needed))
+    $(if $(this_test_ld_path),,$(error prorab-run: this_test_ld_path is not defined))
+
+    run_$(this_run_name): $(this_test_deps)
+$(.RECIPEPREFIX)$(a)$(call prorab-private-lib-path-run,$(this_test_ld_path),$(this_test_cmd))
+
+    endef
+
 endif
