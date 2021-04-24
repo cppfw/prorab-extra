@@ -1,3 +1,9 @@
+prorab-extra (0.2.20) unstable; urgency=medium
+
+  * msys2: prorab-test: allow absolute path in ld path
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 25 Apr 2021 00:43:03 +0300
+
 prorab-extra (0.2.19) unstable; urgency=medium
 
   * add prorab-run
