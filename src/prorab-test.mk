@@ -22,7 +22,7 @@ ifneq ($(prorab_test_included),true)
     $(if $(this_test_deps),,$(error prorab-test: this_test_deps is not defined, set to $$(prorab_space) if no dependencies needed))
     $(if $(this_test_ld_path),,$(error prorab-test: this_test_ld_path is not defined))
 
-    test:: $(foreach i,$(this_test_deps),$(if $(filter /%,$(i)),$(i),$(d)$(i)))
+    test:: $(abspath $(foreach i,$(this_test_deps),$(if $(filter /%,$(i)),$(i),$(d)$(i))))
 $(.RECIPEPREFIX)@myci-running-test.sh $(notdir $(abspath $(d)))
 $(.RECIPEPREFIX)$(a)$(call prorab-private-lib-path-run,$(this_test_ld_path),$(this_test_cmd)) || myci-error.sh "test failed"
 $(.RECIPEPREFIX)@myci-passed.sh
@@ -37,7 +37,7 @@ $(.RECIPEPREFIX)@myci-passed.sh
     $(if $(this_test_deps),,$(error prorab-run: this_test_deps is not defined, set to $$(prorab_space) if no dependencies needed))
     $(if $(this_test_ld_path),,$(error prorab-run: this_test_ld_path is not defined))
 
-    run_$(this_run_name): $(foreach i,$(this_test_deps),$(if $(filter /%,$(i)),$(i),$(d)$(i)))
+    run_$(this_run_name): $(abspath $(foreach i,$(this_test_deps),$(if $(filter /%,$(i)),$(i),$(d)$(i))))
 $(.RECIPEPREFIX)$(a)$(call prorab-private-lib-path-run,$(this_test_ld_path),$(this_test_cmd))
 
     endef
