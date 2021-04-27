@@ -3,7 +3,7 @@ include $(d)../../../../src/prorab-test.mk
 
 this_name := dostuff
 
-this_out_dir := out/rel
+this_out_dir := out/rel/
 
 this_srcs := $(call prorab-src-dir, .)
 
@@ -16,8 +16,8 @@ $(eval $(prorab-build-app))
 
 $(prorab_this_name): $(abspath $(d)../lib/libdostuff$(dot_so))
 
-this_test_cmd := $(prorab_this_name)
-this_test_deps := $(prorab_this_name)
+this_test_cmd := $(this_out_dir)$(this_name)
+this_test_deps := $(this_out_dir)$(this_name)
 this_test_ld_path := ../lib
 
 $(eval $(prorab-test))
