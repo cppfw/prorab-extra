@@ -1,3 +1,9 @@
+prorab-extra (0.2.22) unstable; urgency=medium
+
+  * build for debian stretch
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 19 Jun 2021 00:09:11 +0300
+
 prorab-extra (0.2.21) unstable; urgency=medium
 
   * make  prorab-test input vars relative to d
