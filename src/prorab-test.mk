@@ -5,7 +5,7 @@ ifneq ($(prorab_test_included),true)
     prorab_test_included := true
 
     prorab-private-lib-path-run = \
-            $(if $(filter $(os),windows), \
+            $(if $(filter $(prorab_msys),true), \
                     (cd $(d) && cp $(patsubst %,%/*.dll,$(strip $1)) $(this_out_dir) && $2), \
                     $(if $(filter $(os),macosx), \
                             (cd $(d) && export DYLD_LIBRARY_PATH=$(subst $(prorab_space),:,$(strip $$$$DYLD_LIBRARY_PATH $1)) && $2), \
