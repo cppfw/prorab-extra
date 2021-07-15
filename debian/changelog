@@ -1,3 +1,9 @@
+prorab-extra (0.2.24) unstable; urgency=medium
+
+  * allow setting out dir fr doxygen and pkg config
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 15 Jul 2021 17:16:00 +0300
+
 prorab-extra (0.2.23) unstable; urgency=medium
 
   * deploy to own server
