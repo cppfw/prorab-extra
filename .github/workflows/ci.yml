@@ -96,8 +96,9 @@ jobs:
         url: http://gagis.hopto.org/repo/cppfw/msys2/msys
         shell: 'msys2 {0}'
         key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
-    - name: install ci tools
-      run: pacman -Sy --noconfirm myci
+        install: myci
+    # - name: install ci tools
+    #   run: pacman -Sy --noconfirm myci
     - name: git clone
       uses: myci-actions/checkout@master
     - name: prepare pacman package
