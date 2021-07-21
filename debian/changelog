@@ -1,3 +1,9 @@
+prorab-extra (0.2.25) unstable; urgency=medium
+
+  * fix prorab-test in msys when this_out_dir is empty
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 21 Jul 2021 14:21:22 +0300
+
 prorab-extra (0.2.24) unstable; urgency=medium
 
   * allow setting out dir fr doxygen and pkg config
