@@ -1,3 +1,9 @@
+prorab-extra (0.2.26) unstable; urgency=medium
+
+  * prorab-license
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 27 Jul 2021 01:04:49 +0300
+
 prorab-extra (0.2.25) unstable; urgency=medium
 
   * fix prorab-test in msys when this_out_dir is empty
