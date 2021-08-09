@@ -62,10 +62,10 @@ jobs:
         brew tap cppfw/tap
         brew update
     - name: install ci tools
-      run: brew install myci make
-    - name: set PATH to use latest make
-      uses: myci-actions/export-env-var@master
-      with: {name: PATH, value: "/usr/local/opt/make/libexec/gnubin:$PATH"}
+      run: brew install --with-default-names myci make
+    # - name: set PATH to use latest make
+    #   uses: myci-actions/export-env-var@master
+    #   with: {name: PATH, value: "/usr/local/opt/make/libexec/gnubin:$PATH"}
     - name: git clone
       uses: myci-actions/checkout@master
     - name: install deps
