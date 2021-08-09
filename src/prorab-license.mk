@@ -12,7 +12,7 @@ define prorab-license
 $(.RECIPEPREFIX)$(a)echo "check license"
 $(.RECIPEPREFIX)$(a)myci-license.sh --license $(d)$(this_license_file) --dir $(d)$(this_src_dir) --check
 
-    apply-license:
+    apply-license::
 $(.RECIPEPREFIX)$(a)echo "apply license"
 $(.RECIPEPREFIX)$(a)myci-license.sh --license $(d)$(this_license_file) --dir $(d)$(this_src_dir)
 
