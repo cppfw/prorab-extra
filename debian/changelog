@@ -1,3 +1,9 @@
+prorab-extra (0.2.30) unstable; urgency=medium
+
+  * use latest make from homebrew formulae
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 10 Aug 2021 14:18:51 +0300
+
 prorab-extra (0.2.29) unstable; urgency=medium
 
   * stuff
