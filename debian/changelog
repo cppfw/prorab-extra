@@ -1,3 +1,9 @@
+prorab-extra (0.2.32) unstable; urgency=medium
+
+  * add myci dependency
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 02 Oct 2021 01:32:36 +0300
+
 prorab-extra (0.2.31) unstable; urgency=medium
 
   * build for debian bullseye
