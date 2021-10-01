@@ -9,9 +9,9 @@ url="http://github.com/cppfw/prorab-extra"
 license=('MIT')
 groups=()
 
-depends=('prorab')
+depends=('prorab' 'myci')
 
-#Need 'diffutils' package for 'cmp' program
+# Need 'diffutils' package for 'cmp' program
 makedepends=('myci' 'diffutils')
 
 checkdepends=('myci' 'doxygen')

@@ -5,6 +5,7 @@ class ProrabExtra < Formula
   sha256 "$(sha256)"
 
   depends_on "make"
+  depends_on "myci"
   depends_on "prorab"
 
   # use gmake here because otherwise homebrew uses default Mac's make which is of too old version 3.81
