@@ -1,3 +1,9 @@
+prorab-extra (0.2.34) unstable; urgency=medium
+
+  * build for raspbian bullseye
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 08 Oct 2021 01:47:28 +0300
+
 prorab-extra (0.2.33) unstable; urgency=medium
 
   * add prorab-install-dbgsrc
