@@ -1,3 +1,9 @@
+prorab-extra (0.2.35) unstable; urgency=medium
+
+  * rename run_* target to run-*
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 15 Jan 2022 14:05:32 +0200
+
 prorab-extra (0.2.34) unstable; urgency=medium
 
   * build for raspbian bullseye
