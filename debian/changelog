@@ -1,3 +1,9 @@
+prorab-extra (0.2.36) unstable; urgency=medium
+
+  * msys: prorab-test: ignore cp *.dll command failure
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 24 Jan 2022 16:39:43 +0200
+
 prorab-extra (0.2.35) unstable; urgency=medium
 
   * rename run_* target to run-*
