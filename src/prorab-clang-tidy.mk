@@ -6,7 +6,7 @@ ifneq ($(prorab_clang_tidy_included),true)
 
 define prorab-private-clang-tidy-single-source-file
 
-    $(eval prorab_private_this_clang_tidy_flags := $(if $(this_clang_tidy_flags),$(this_clang_tidy_flags),--header-filter=.* --warnings-as-errors=*))
+    $(eval prorab_private_this_clang_tidy_flags := --header-filter=.* --warnings-as-errors=*)
     $(eval prorab_private_this_clang_tidy_flags += $(if $(this_clang_tidy_checks),--checks="$(subst $(prorab_space),$(prorab_comma),$(this_clang_tidy_checks))",))
 
     .PHONY:
