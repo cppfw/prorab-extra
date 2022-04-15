@@ -18,8 +18,8 @@ endef
 
 define prorab-clang-tidy
 
-$(foreach f,$(this_srcs),$(eval $(call prorab-private-clang-tidy-single-source-file,$(f))))
-test:: $(foreach f,$(this_srcs),clang-tidy__$(f))
+    $(foreach f,$(this_srcs),$(eval $(call prorab-private-clang-tidy-single-source-file,$(f))))
+    test:: $(foreach f,$(this_srcs),clang-tidy__$(f))
 
 endef
 
