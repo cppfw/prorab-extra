@@ -16,11 +16,18 @@ $(.RECIPEPREFIX)$(a)(cd $(d) && clang-tidy $1 $(prorab_private_this_clang_tidy_f
 
 endef
 
-define prorab-clang-tidy
+# macosx at the moment doesn't provide convenient way to install clang-tidy, so just
+# don't perform clang-tidy cheks on macosx.
+# TODO: remove the ifeq when macosx homebrew adds a formulae for clang-tidy
+ifeq ($(os),macosx)
+    prorab-clang-tidy :=
+else
+    define prorab-clang-tidy
 
-    $(foreach f,$(this_srcs),$(eval $(call prorab-private-clang-tidy-single-source-file,$(f))))
-    test:: $(foreach f,$(this_srcs),clang-tidy__$(f))
+        $(foreach f,$(this_srcs),$(eval $(call prorab-private-clang-tidy-single-source-file,$(f))))
+        test:: $(foreach f,$(this_srcs),clang-tidy__$(f))
 
-endef
+    endef
+endif
 
 endif
