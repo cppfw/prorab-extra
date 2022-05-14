@@ -4,10 +4,10 @@ include prorab.mk
 ifneq ($(prorab_clang_format_included),true)
     prorab_clang_format_included := true
 
-# macosx at the moment doesn't provide clang-format version 15, so just
+# macosx and msys2 at the moment doesn't provide clang-format version 15, so just
 # don't perform clang-format cheks on macosx.
-# TODO: remove the ifeq when macosx homebrew adds a formulae for clang-format 15
-ifeq ($(os),macosx)
+# TODO: remove the ifneq when macosx homebrew and msys2 adds a package for clang-format 15
+ifneq ($(os),linux)
     prorab-clang-format :=
 else
     define prorab-clang-format
