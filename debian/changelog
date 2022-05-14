@@ -1,3 +1,9 @@
+prorab-extra (0.2.40) unstable; urgency=medium
+
+  * clang-format only on linux
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 14 May 2022 16:01:21 +0300
+
 prorab-extra (0.2.39) unstable; urgency=medium
 
   * add prorab-clang-format
