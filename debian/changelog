@@ -1,3 +1,9 @@
+prorab-extra (0.2.39) unstable; urgency=medium
+
+  * add prorab-clang-format
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 14 May 2022 15:48:05 +0300
+
 prorab-extra (0.2.38) unstable; urgency=medium
 
   * turn off prorab-clang-tidy for macosx
