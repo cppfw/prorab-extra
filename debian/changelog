@@ -1,3 +1,9 @@
+prorab-extra (0.2.41) unstable; urgency=medium
+
+  * apply-format only on x86_64
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 15 May 2022 14:53:57 +0300
+
 prorab-extra (0.2.40) unstable; urgency=medium
 
   * clang-format only on linux
