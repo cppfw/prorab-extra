@@ -10,6 +10,13 @@ ifneq ($(prorab_clang_format_included),true)
 ifneq ($(os),linux)
     prorab-clang-format :=
 else
+
+# clang-format 15 is only available for x86_64 so far.
+# TODO: remove the ifneq when clang-format 15 is in Debian stable.
+ifneq ($(shell arch),x86_64)
+	prorab-clang-format :=
+else
+
     define prorab-clang-format
 
         $(eval prorab_private_src_suffixes := $(if $(this_src_suffixes),$(this_src_suffixes),c h cpp hpp cxx hxx))
@@ -23,11 +30,13 @@ else
 $(.RECIPEPREFIX)@echo "check format"
 $(.RECIPEPREFIX)$(a)(cd $(d) && clang-format --dry-run --Werror $(prorab_private_format_srcs))
 
-        apply-format:
+        apply-format::
 $(.RECIPEPREFIX)@echo "apply format"
 $(.RECIPEPREFIX)$(a)(cd $(d) && clang-format -i --Werror $(prorab_private_format_srcs))
 
     endef
+
+endif
 endif
 
 endif
