@@ -1,3 +1,9 @@
+prorab-extra (0.2.42) unstable; urgency=medium
+
+  * build for ubuntu jammy
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 22 Oct 2022 00:54:43 +0300
+
 prorab-extra (0.2.41) unstable; urgency=medium
 
   * apply-format only on x86_64
