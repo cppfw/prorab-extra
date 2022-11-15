@@ -1,3 +1,9 @@
+prorab-extra (0.2.43) unstable; urgency=medium
+
+  * improve error message
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 15 Nov 2022 22:56:55 +0200
+
 prorab-extra (0.2.42) unstable; urgency=medium
 
   * build for ubuntu jammy
