@@ -35,7 +35,7 @@ $(.RECIPEPREFIX)@myci-passed.sh
     $(if $(this_run_name),,$(error prorab-run: this_run_name is not defined))
     $(if $(this_test_cmd),,$(error prorab-run: this_test_cmd is not defined))
     $(if $(this_test_deps),,$(error prorab-run: this_test_deps is not defined, set to $$(prorab_space) if no dependencies needed))
-    $(if $(this_test_ld_path),,$(error prorab-run: this_test_ld_path is not defined))
+    $(if $(this_test_ld_path),,$(error prorab-run: this_test_ld_path is not defined, set to $$(prorab_space) if no ld path needed))
 
     run-$(this_run_name): $(abspath $(foreach i,$(this_test_deps),$(if $(filter /%,$(i)),$(i),$(d)$(i))))
 $(.RECIPEPREFIX)$(a)$(call prorab-private-lib-path-run,$(this_test_ld_path),$(this_test_cmd))
