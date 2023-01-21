@@ -1,3 +1,9 @@
+prorab-extra (0.2.44) unstable; urgency=medium
+
+  * do not use deprecated stuff
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 21 Jan 2023 22:01:21 +0200
+
 prorab-extra (0.2.43) unstable; urgency=medium
 
   * improve error message
