@@ -1,3 +1,9 @@
+prorab-extra (0.2.47) unstable; urgency=medium
+
+  * archlinux: deploy to arch repos
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 25 Aug 2023 23:59:40 +0300
+
 prorab-extra (0.2.46) unstable; urgency=medium
 
   * deploy to arch linux
