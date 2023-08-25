@@ -5,14 +5,16 @@ pkgrel=1
 epoch=
 pkgdesc="non-recursive GNU make-based build system additions for doxygen and pkg-config"
 arch=('any')
-url="http://github.com/cppfw/prorab-extra"
+url="http://github.com/cppfw/${pkgname}"
 license=('MIT')
 groups=()
 
 depends=('prorab' 'myci')
 
-# Need 'diffutils' package for 'cmp' program
-makedepends=('myci' 'diffutils')
+makedepends=(
+	'myci'
+	'diffutils' # for 'cmp' program
+)
 
 checkdepends=('myci' 'doxygen')
 
@@ -24,12 +26,12 @@ backup=()
 options=()
 install=
 changelog=
-source=() #Do not download any sources
+source=() # do not download any sources
 noextract=()
 md5sums=()
 validpgpkeys=()
 
-rootDir=$(pwd)/.. #project root directory
+rootDir=$(pwd)/.. # project root directory
 
 prepare() {
 	cd "$rootDir"
@@ -37,7 +39,7 @@ prepare() {
 
 build() {
 	cd "$rootDir"
-	make autojobs=true
+	make
 }
 
 check() {
