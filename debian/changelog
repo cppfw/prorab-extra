@@ -1,3 +1,9 @@
+prorab-extra (0.2.49) unstable; urgency=medium
+
+  * apt
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 28 Feb 2024 16:43:00 +0200
+
 prorab-extra (0.2.48) unstable; urgency=medium
 
   * bookworm
