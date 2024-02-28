@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           # - {os: debian, codename: stretch, image_owner: }
-          - {os: debian, codename: buster, image_owner: }
+          # - {os: debian, codename: buster, image_owner: }
           - {os: debian, codename: bullseye, image_owner: }
           - {os: debian, codename: bookworm, image_owner: }
           # - {os: ubuntu, codename: bionic, image_owner: }
