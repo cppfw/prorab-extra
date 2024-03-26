@@ -16,7 +16,7 @@ else
 
 # clang-format 15 is only available for x86_64 so far.
 # TODO: remove the ifneq when clang-format 15 is in Debian stable.
-ifneq ($(shell arch),x86_64)
+ifneq ($(shell uname --machine),x86_64)
 	prorab-clang-format :=
 else
 
