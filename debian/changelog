@@ -1,3 +1,9 @@
+prorab-extra (0.2.51) unstable; urgency=medium
+
+  * macos stuff
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 28 Apr 2024 17:20:07 +0300
+
 prorab-extra (0.2.50) unstable; urgency=medium
 
   * fix macos packaging
