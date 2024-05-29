@@ -1,3 +1,9 @@
+prorab-extra (0.2.52) unstable; urgency=medium
+
+  * build for ubuntu:noble
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 29 May 2024 17:31:02 +0300
+
 prorab-extra (0.2.51) unstable; urgency=medium
 
   * macos stuff
