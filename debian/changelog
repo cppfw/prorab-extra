@@ -1,3 +1,9 @@
+prorab-extra (0.2.54) unstable; urgency=medium
+
+  * build for raspbian bookworm
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 11 Jun 2024 21:33:27 +0300
+
 prorab-extra (0.2.53) unstable; urgency=medium
 
   * fix prorab-clang-format
