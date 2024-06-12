@@ -22,7 +22,10 @@ define prorab-install-dbgsrc
     $(if $(this_src_dir),,$(error prorab-install-dbgsrc: this_src_dir is not defined))
 
     # install target for debug sources is only generated if PRORAB_INSTALL_DBGSRC is set to true
-    $(if $(filter true, $(PRORAB_INSTALL_DBGSRC)),$(prorab-private-install-dbgsrc))
+    $(if $(filter $(this_no_install),true),
+        ,
+        $(if $(filter true, $(PRORAB_INSTALL_DBGSRC)),$(prorab-private-install-dbgsrc))
+    )
 
 endef
 
