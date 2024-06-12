@@ -1,3 +1,9 @@
+prorab-extra (0.2.55) unstable; urgency=medium
+
+  * install-dbgsrc to honor this_no_install
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 13 Jun 2024 00:18:16 +0300
+
 prorab-extra (0.2.54) unstable; urgency=medium
 
   * build for raspbian bookworm
