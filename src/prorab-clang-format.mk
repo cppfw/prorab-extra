@@ -1,4 +1,5 @@
 include prorab.mk
+include prorab-linux.mk
 
 # include guard
 ifneq ($(prorab_clang_format_included),true)
@@ -14,8 +15,12 @@ ifneq ($(os),linux)
     prorab-clang-format :=
 else
 
-# clang-format 15 is only available for x86_64 so far.
-# TODO: remove the ifneq when clang-format 15 is in Debian stable.
+ifneq ($(os),debian)
+    prorab-clang-format :=
+else
+
+# clang-format 19 is only available for x86_64 so far.
+# TODO: remove the ifneq when clang-format 19 is in Debian stable.
 ifneq ($(shell uname --machine),x86_64)
 	prorab-clang-format :=
 else
@@ -39,7 +44,8 @@ $(.RECIPEPREFIX)$(a)(cd $(d) && clang-format -i --Werror $(prorab_private_format
 
     endef
 
-endif
-endif
+endif # only x86_64
+endif # only debian
+endif # only linux
 
 endif
