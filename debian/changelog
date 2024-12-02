@@ -1,3 +1,9 @@
+prorab-extra (0.2.56) unstable; urgency=medium
+
+  * conan
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 02 Dec 2024 17:10:01 +0200
+
 prorab-extra (0.2.55) unstable; urgency=medium
 
   * install-dbgsrc to honor this_no_install
