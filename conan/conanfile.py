@@ -14,8 +14,8 @@ class ProrabextraConan(ConanFile):
 	package_type = "build-scripts"
 
 	def requirements(self):
-		self.tool_requires("make/[>=4.4.1]")
-		self.tool_requires("prorab/[>=2.0.27]@cppfw/main")
+		self.requires("make/[>=4.4.1]")
+		self.requires("prorab/[>=2.0.27]@cppfw/main")
 
 	# save commit and remote URL to conandata.yml for packaging
 	def export(self):
