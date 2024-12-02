@@ -46,7 +46,7 @@ class ProrabextraConan(ConanFile):
 		copy(conanfile=self, pattern="*.mk", dst=dst_include_dir, src=src_dir, keep_path=True)
 
 	def package_info(self):
-		self.buildenv_info.append("MAKE_INCLUDE_DIRS_ARG", "--include-dir=TODO:")
+		self.buildenv_info.append("MAKE_INCLUDE_DIRS_ARG", "--include-dir=" + os.path.join(self.package_folder, "include"))
 
 	def package_id(self):
 		# change package id only when minor or major version changes, i.e. when ABI breaks
