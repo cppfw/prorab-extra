@@ -4,6 +4,7 @@ on:
   pull_request:
 env:
   PACKAGE_NAME: ${{ github.event.repository.name }}
+  PACKAGE_VERSION: ${{ github.sha }}
   MYCI_GIT_USERNAME: igagis
   MYCI_GIT_PASSWORD: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
   MYCI_CONAN_REMOTE: https://gagis.hopto.org/conan
