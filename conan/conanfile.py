@@ -15,10 +15,6 @@ class ProrabextraConan(ConanFile):
 
 	def requirements(self):
 		self.tool_requires("make/[>=4.4.1]")
-		# self.requires("papki/[>=0.0.0]@cppfw/main", transitive_headers=True, transitive_libs=True)
-
-	# def build_requirements(self):
-	# 	self.tool_requires("make/[>=4.4.1]")
 
 	# save commit and remote URL to conandata.yml for packaging
 	def export(self):
