@@ -10,8 +10,7 @@ class TestConan(ConanFile):
 	def requirements(self):
 		self.requires(self.tested_reference_str)
 
-#	def build(self):
-
+	# def build(self):
 
 	def test(self):
 		self.run("make", env="conanrun") # env sets LD_LIBRARY_PATH etc. to find dependency libs
