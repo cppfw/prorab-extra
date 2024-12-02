@@ -1,3 +1,9 @@
+prorab-extra (0.2.57) unstable; urgency=medium
+
+  * conan: all
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 03 Dec 2024 00:34:41 +0200
+
 prorab-extra (0.2.56) unstable; urgency=medium
 
   * conan
