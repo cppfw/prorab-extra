@@ -10,7 +10,6 @@ class ProrabextraConan(ConanFile):
 	author = "Ivan Gagis <igagis@gmail.com>"
 	url = "http://github.com/cppfw/" + name
 	description = "extra addons for prorab build script"
-
 	settings = "os", "compiler", "build_type", "arch"
 	package_type = "build-scripts"
 
@@ -20,10 +19,6 @@ class ProrabextraConan(ConanFile):
 	def build_requirements(self):
 		# self.requires("tst/[>=0.3.29]@cppfw/main", visible=False)
 		self.tool_requires("make/[>=4.4.1]")
-
-	# def config_options(self):
-	# 	if self.settings.os == "Windows":
-	# 		del self.options.fPIC
 
 	# save commit and remote URL to conandata.yml for packaging
 	def export(self):
@@ -44,10 +39,6 @@ class ProrabextraConan(ConanFile):
 		# shallow clone submodules
 		git.run("submodule update --init --remote --depth 1")
 
-	# def build(self):
-	# 	self.run("make lint=off")
-	# 	self.run("make lint=off test")
-
 	def package(self):
 		src_dir = os.path.join(self.build_folder, "src")
 		dst_include_dir = os.path.join(self.package_folder, "include")
@@ -55,7 +46,7 @@ class ProrabextraConan(ConanFile):
 		copy(conanfile=self, pattern="*.mk", dst=dst_include_dir, src=src_dir, keep_path=True)
 
 	def package_info(self):
-		self.buildenv_info.define("PRORAB_EXTRA_INCLUDE_DIR", "TODO:")
+		self.buildenv_info.append("MAKE_INCLUDE_DIR_ARGS", "--include-dir=TODO:")
 
 	def package_id(self):
 		# change package id only when minor or major version changes, i.e. when ABI breaks
