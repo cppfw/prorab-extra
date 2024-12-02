@@ -13,12 +13,12 @@ class ProrabextraConan(ConanFile):
 	settings = "os", "compiler", "build_type", "arch"
 	package_type = "build-scripts"
 
-	# def requirements(self):
-	# 	self.requires("papki/[>=0.0.0]@cppfw/main", transitive_headers=True, transitive_libs=True)
-
-	def build_requirements(self):
-		# self.requires("tst/[>=0.3.29]@cppfw/main", visible=False)
+	def requirements(self):
 		self.tool_requires("make/[>=4.4.1]")
+		# self.requires("papki/[>=0.0.0]@cppfw/main", transitive_headers=True, transitive_libs=True)
+
+	# def build_requirements(self):
+	# 	self.tool_requires("make/[>=4.4.1]")
 
 	# save commit and remote URL to conandata.yml for packaging
 	def export(self):
@@ -51,3 +51,9 @@ class ProrabextraConan(ConanFile):
 	def package_id(self):
 		# change package id only when minor or major version changes, i.e. when ABI breaks
 		self.info.requires.minor_mode()
+
+		# makefiles do not depend on any of os, arch, compiler, build_type
+		del self.info.settings.os
+		del self.info.settings.arch
+		del self.info.settings.compiler
+		del self.info.settings.build_type
