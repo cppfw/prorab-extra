@@ -11,15 +11,17 @@ ifneq ($(prorab_doxygen_included),true)
 
         $(if $(this_name),,$(error prorab-build-doxygen: this_name is not defined))
 
+        $(if $(this_version),,$(error prorab-build-doxygen: this_version is not defined))
+
         all: doc
 
         # NOTE: prorab_private_out_dir is defined by prorab.mk
 
-        doc:: $(d)$(prorab_private_out_dir)doxygen
+        doc:: $(d)$(prorab_private_out_dir)doxygen.cfg
 
-        $(d)$(prorab_private_out_dir)doxygen.cfg: $(d)doxygen.cfg.in $(d)../debian/changelog
+        $(d)$(prorab_private_out_dir)doxygen.cfg: $(d)doxygen.cfg.in
 $(if $(prorab_private_out_dir),$(.RECIPEPREFIX)$(a)mkdir -p $(d)$(prorab_private_out_dir))
-$(.RECIPEPREFIX)$(a)myci-apply-version.sh --version $$(shell myci-deb-version.sh $(d)../debian/changelog) $$(firstword $$^) --out-dir $(d)$(prorab_private_out_dir)
+$(.RECIPEPREFIX)$(a)myci-apply-version.sh --version $(this_version) $$(firstword $$^) --out-dir $(d)$(prorab_private_out_dir)
 
         $(d)$(prorab_private_out_dir)doxygen: $(d)$(prorab_private_out_dir)doxygen.cfg
 $(.RECIPEPREFIX)@echo "build docs"

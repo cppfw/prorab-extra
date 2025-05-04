@@ -14,6 +14,7 @@ $(.RECIPEPREFIX)+$(a)$(MAKE) --directory $(d)tmp apply-license
 # apply license second time
 $(.RECIPEPREFIX)+$(a)$(MAKE) --directory $(d)tmp apply-license
 $(.RECIPEPREFIX)+$(a)$(MAKE) --directory $(d)tmp test
+$(.RECIPEPREFIX)@$(this_pass)
 
 clean::
 $(.RECIPEPREFIX)$(a)rm --force --recursive $(d)tmp
