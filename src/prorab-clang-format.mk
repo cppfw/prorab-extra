@@ -17,8 +17,9 @@ ifneq ($(shell uname --machine),x86_64)
 	prorab-clang-format :=
 else
 
-    define prorab-private-clang-format-test-rule
-        test:: check-format
+    define prorab-private-clang-format-check_recipe
+$(.RECIPEPREFIX)@echo "check format"
+$(.RECIPEPREFIX)$(a)(cd $(d) && clang-format --dry-run --Werror $(prorab_private_format_srcs))
     endef
 
     define prorab-clang-format
@@ -30,12 +31,15 @@ else
                 $(foreach s,$(wordlist 2,$(words $(prorab_private_src_suffixes)),$(prorab_private_src_suffixes)),-or -name "*.$(s)"))
         $(eval prorab_private_format_srcs := $(shell cd $(d) && find $(prorab_private_src_dir) -type f $(prorab_private_format_find_patterns)))
 
-        $(if $(filter $(this_test_format),true),$(prorab-private-clang-format-test-rule))
+        $(if $(filter $(this_no_test_format),true),
+            ,
+            test::
+$(prorab-private-clang-format-check_recipe)
+        )
 
         .PHONY:
         check-format::
-$(.RECIPEPREFIX)@echo "check format"
-$(.RECIPEPREFIX)$(a)(cd $(d) && clang-format --dry-run --Werror $(prorab_private_format_srcs))
+$(prorab-private-clang-format-check_recipe)
 
         format::
 $(.RECIPEPREFIX)@echo "apply format"
