@@ -4,9 +4,6 @@ include prorab.mk
 ifneq ($(prorab_clang_format_included),true)
     prorab_clang_format_included := true
 
-# TODO: deprecated target, remove
-apply-format: format
-
 # macosx and msys2 at the moment doesn't provide clang-format version 15, so just
 # don't perform clang-format cheks on macosx.
 # TODO: remove the ifneq when macosx homebrew and msys2 adds a package for clang-format 15
@@ -20,6 +17,10 @@ ifneq ($(shell uname --machine),x86_64)
 	prorab-clang-format :=
 else
 
+    define prorab-private-clang-format-test-rule
+        test:: check-format
+    endef
+
     define prorab-clang-format
 
         $(eval prorab_private_src_suffixes := $(if $(this_src_suffixes),$(this_src_suffixes),c h cpp hpp cxx hxx))
@@ -29,7 +30,10 @@ else
                 $(foreach s,$(wordlist 2,$(words $(prorab_private_src_suffixes)),$(prorab_private_src_suffixes)),-or -name "*.$(s)"))
         $(eval prorab_private_format_srcs := $(shell cd $(d) && find $(prorab_private_src_dir) -type f $(prorab_private_format_find_patterns)))
 
-        test::
+        $(if $(filter $(this_test_format),true),$(prorab-private-clang-format-test-rule))
+
+        .PHONY:
+        check-format::
 $(.RECIPEPREFIX)@echo "check format"
 $(.RECIPEPREFIX)$(a)(cd $(d) && clang-format --dry-run --Werror $(prorab_private_format_srcs))
 
