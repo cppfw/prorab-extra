@@ -1,3 +1,9 @@
+prorab-extra (0.2.60) unstable; urgency=medium
+
+  * debian trixie build
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 09 Aug 2025 20:24:30 +0300
+
 prorab-extra (0.2.59) unstable; urgency=medium
 
   * add this_no_test_format
