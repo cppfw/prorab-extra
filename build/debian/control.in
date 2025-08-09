@@ -2,16 +2,21 @@ Source: prorab-extra
 Section: misc
 Priority: extra
 Maintainer: Ivan Gagis <igagis@gmail.com>
-Build-Depends: debhelper (>= 9),
-        sed,
-        make,
-        prorab,
-        myci
+Build-Depends:
+	debhelper (>= 9),
+	sed,
+	make,
+	prorab,
+	myci
 Standards-Version: 3.9.2
 
 Package: prorab-extra
 Section: devel
 Architecture: all
-Depends: sed, make, prorab, myci
+Depends:
+	sed,
+	make,
+	prorab,
+	myci
 Description: Extra additions for prorab.
- Additional rules for prorab.
+	Additional rules for prorab.
