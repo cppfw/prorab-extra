@@ -31,7 +31,7 @@ $(.RECIPEPREFIX)$(a)(cd $(d) && clang-format --dry-run --Werror $(prorab_private
                 $(foreach s,$(wordlist 2,$(words $(prorab_private_src_suffixes)),$(prorab_private_src_suffixes)),-or -name "*.$(s)"))
         $(eval prorab_private_format_srcs := $(shell cd $(d) && find $(prorab_private_src_dir) -type f $(prorab_private_format_find_patterns)))
 
-        $(if $(filter $(this_no_test_format),true),
+        $(if $(filter $(this_no_format_test),true),
             ,
             test::
 $(prorab-private-clang-format-check_recipe)
