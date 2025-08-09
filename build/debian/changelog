@@ -1,3 +1,9 @@
+prorab-extra (0.2.61) unstable; urgency=medium
+
+  * rename api var
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 09 Aug 2025 20:51:32 +0300
+
 prorab-extra (0.2.60) unstable; urgency=medium
 
   * debian trixie build
