@@ -14,7 +14,12 @@ class ProrabextraConan(ConanFile):
 	package_type = "build-scripts"
 
 	def requirements(self):
-		self.requires("make/[>=4.4.1]", run=True, visible=True)
+		# make is a transitive dependency of prorab (required with
+		# visible=True, run=True); we don't require it directly because
+		# prorab pins the recipe revision of make/4.4.1 (see
+		# https://github.com/conan-io/conan-center-index/issues/30837)
+		# and a version range requirement like "make/[>=4.4.1]" would
+		# resolve to a different revision, causing a version conflict.
 		self.requires("prorab/[>=2.0.27]@cppfw/main", visible=True)
 		self.requires("myci/[>=0.1.173]@cppfw/main", run=True, visible=True)
 
