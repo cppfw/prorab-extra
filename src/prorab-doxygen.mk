@@ -19,7 +19,7 @@ ifneq ($(prorab_doxygen_included),true)
 
         # NOTE: prorab_private_out_dir is defined by prorab.mk
 
-        doc:: $(d)$(prorab_private_out_dir)doxygen.cfg
+        doc:: $(d)$(prorab_private_out_dir)doxygen
 
         $(d)$(prorab_private_out_dir)doxygen.cfg: $(d)doxygen.cfg.in
 $(if $(prorab_private_out_dir),$(.RECIPEPREFIX)$(a)mkdir -p $(d)$(prorab_private_out_dir))
