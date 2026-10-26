@@ -1,3 +1,9 @@
+prorab-extra (0.2.62) unstable; urgency=medium
+
+  * fix doxygen building
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 27 Oct 2026 00:58:52 +0200
+
 prorab-extra (0.2.61) unstable; urgency=medium
 
   * rename api var
